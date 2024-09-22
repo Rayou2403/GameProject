@@ -25,7 +25,7 @@ and advanced collision detection to create a challenging and fluid gameplay expe
 
 - Movement system 
 - Collision with objects
-- Dynamic level creation
+- Dynamic level creation (files)
 - Automatic camera control
 - Character animations
 
