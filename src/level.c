@@ -22,6 +22,17 @@ Level generateRandomLevel() {
 
     level.tiles[HEIGHT - 2][0] = '@'; // Player starting position
 
+    // Randomize the end-of-level '$' position
+    int endX, endY;
+
+    // Ensure the end '$' is not placed at the player's starting position
+    do {
+        endX = rand() % WIDTH;
+        endY = rand() % HEIGHT;
+    } while (endX == 0 && endY == HEIGHT - 2);  // Prevent it from overlapping with '@'
+
+    level.tiles[endY][endX] = '$';  // Place the end of the level
+
     return(level);
 }
 
@@ -57,7 +68,8 @@ Level loadLevelFromFile(const char *filename) {
     char line[WIDTH + 2];  // +2 for newline and null terminator
     while (fgets(line, sizeof(line), file) && y < HEIGHT) {
         for (int x = 0; x < WIDTH; x++) {
-            level.tiles[y][x] = line[x];  // Copy each character from the file to the level array
+            if (line[x] == '\n') break;  // Skip newline characters
+            level.tiles[y][x] = line[x];  // Copy the tile character
         }
         y++;
     }
