@@ -1,8 +1,8 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#define WIDTH 50
-#define HEIGHT 20
+#define WIDTH 70
+#define HEIGHT 31
 
 // Structure to represent the level
 typedef struct {

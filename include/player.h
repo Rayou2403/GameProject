@@ -4,15 +4,25 @@
 #include "level.h"
 #include <SDL2/SDL.h>
 
-// Define the Player structure
+// Physics of the game for moving
+#define ACCELERATION 0.01f
+#define MAX_SPEED 0.05f
+#define FRICTION 0.0003f
+#define FRAME_DELAY 32 
+
 typedef struct {
-    int x;  // Player's X position (column)
-    int y;  // Player's Y position (row)
+    float x, y;          // Player's position on the grid (tile-based)
+    float velX,velY;        // Horizontal velocity (smooth movement)
+    int grounded;      // Whether the player is on the ground
 } Player;
 
+// Initializes the player at a given position in the level
+Player initPlayer(Level *level);
 
-Player initPlayer(Level *level); // Function to initialize the player
+// Moves the player based on keyboard input (uses continuous input)
+void movePlayer(Level *level, Player *player, SDL_Event event, const Uint8 *keyboardState, int *playerFrame, int *facingLeft, int *frameCounter);
 
-void movePlayer(Level *level, Player *player, SDL_Event event, int *playerFrame, int *facingLeft); // Function to move the player based on keyboard input
+// Updates the player's position based on velocity and friction
+void applyPhysics(Player *player, Level *level);
 
-#endif // PLAYER_H
+#endif
