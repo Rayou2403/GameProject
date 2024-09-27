@@ -3,8 +3,8 @@
 #include <SDL2/SDL.h>
 #include <time.h>
 
- // Function declaration for rendering the level
-void renderLevel(SDL_Renderer *renderer, Level level, SDL_Texture *rightPlayerTexture, SDL_Texture *leftPlayerTexture, SDL_Texture *groundTexture, int playerFrame, Player player, int facingLeft) {
+// Function declaration for rendering the level
+void renderLevel(SDL_Renderer *renderer, Level level, SDL_Texture *rightPlayerTexture, SDL_Texture *leftPlayerTexture, SDL_Texture *groundTexture, int playerFrame, Player player, int facingLeft, int cameraX, int cameraY) {
     int tileSize = 32;  // Each tile is 32x32 pixels
 
     // Define scale factors for ground and player
@@ -19,8 +19,8 @@ void renderLevel(SDL_Renderer *renderer, Level level, SDL_Texture *rightPlayerTe
         for (int x = 0; x < WIDTH; x++) {
             // Calculate the position and size for ground tile, centered
             SDL_Rect tileRect = {
-                x * tileSize  - groundOffset,
-                y * tileSize  - groundOffset,
+                x * tileSize  - groundOffset - cameraX,
+                y * tileSize  - groundOffset - cameraY,
                 tileSize * groundScaleFactor,
                 tileSize * groundScaleFactor
             };
@@ -38,8 +38,8 @@ void renderLevel(SDL_Renderer *renderer, Level level, SDL_Texture *rightPlayerTe
                 SDL_Rect srcRect = {playerFrame * 64, 0, 64, 64};  // Original player sprite frame (64x64)
                 
                 SDL_Rect destRect = {
-                    player.x * tileSize - playerOffset,
-                    player.y * tileSize - playerOffset,
+                    player.x * tileSize - playerOffset - cameraX ,
+                    player.y * tileSize - playerOffset - cameraY,
                     tileSize * playerScaleFactor,
                     tileSize * playerScaleFactor
                 };

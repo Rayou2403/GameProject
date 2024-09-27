@@ -1,7 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#define WIDTH 70
+#define WIDTH 140
 #define HEIGHT 31
 
 // Structure to represent the level

@@ -7,33 +7,39 @@
 // Function to generate a random level
 Level generateRandomLevel() {
     Level level;
-    srand(time(NULL)); // Initialize random seed
+    // srand(time(NULL)); // Initialize random seed
 
-    // Generate random tiles 
+    // Initialize the entire level with empty space
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            if (rand() % 10 < 3) {
-                level.tiles[y][x] = '#'; // Ground tile
-            } else {
-                level.tiles[y][x] = '.'; // Empty space
-            }
+            level.tiles[y][x] = '.'; // Empty space
         }
     }
 
-    level.tiles[HEIGHT - 2][0] = '@'; // Player starting position
+    // Set walls on the left and right borders
+    for (int y = 0; y < HEIGHT; y++) {
+        level.tiles[y][0] = '|';          // Left wall
+        level.tiles[y][WIDTH - 1] = '|';  // Right wall
+    }
 
-    // Randomize the end-of-level '$' position
-    int endX, endY;
+    // Set ground at the bottom row
+    for (int x = 0; x < WIDTH; x++) {
+        level.tiles[HEIGHT - 1][x] = '#'; // Ground tile
+    }
 
-    // Ensure the end '$' is not placed at the player's starting position
-    do {
-        endX = rand() % WIDTH;
-        endY = rand() % HEIGHT;
-    } while (endX == 0 && endY == HEIGHT - 2);  // Prevent it from overlapping with '@'
+    // Place player start position (`@`)
+    level.tiles[HEIGHT - 3][1] = '@';  // Second to last row, second column
 
-    level.tiles[endY][endX] = '$';  // Place the end of the level
+    // // You can still randomize the rest of the level as needed
+    // for (int y = 0; y < HEIGHT - 1; y++) { // Avoid ground and borders
+    //     for (int x = 1; x < WIDTH - 1; x++) { // Avoid left and right walls
+    //         if (rand() % 10 < 3) {
+    //             level.tiles[y][x] = '#'; // Random ground tiles
+    //         }
+    //     }
+    // }
 
-    return(level);
+    return level;
 }
 
 // Function to save the level to a file
