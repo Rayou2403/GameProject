@@ -55,4 +55,24 @@ void renderLevel(SDL_Renderer *renderer, Level level, SDL_Texture *rightPlayerTe
     }
 }
 
+extern int cameraWidth;
+extern int cameraHeight;
+
+// Function that adapt the camera to the player
+void updateCamera(Player *player, int *cameraX, int *cameraY, int tileSize) {
+    // Half the screen size to keep player centered
+    int halfCameraWidth = cameraWidth / 2;
+    int halfCameraHeight = cameraHeight / 2;
+
+    // Center the camera around the player
+    *cameraX = (player->x * tileSize) - halfCameraWidth;
+    *cameraY = (player->y * tileSize) - halfCameraHeight;
+
+    // Ensure the camera doesn't go out of level bounds
+    if (*cameraX < 0) *cameraX = 0;  // Left boundary
+    if (*cameraY < 0) *cameraY = 0;  // Top boundary
+    if (*cameraX > (WIDTH * tileSize - cameraWidth)) *cameraX = (WIDTH * tileSize - cameraWidth);  // Right boundary
+    if (*cameraY > (HEIGHT * tileSize - cameraHeight)) *cameraY = (HEIGHT * tileSize - cameraHeight); // Bottom boundary
+}
+
 
