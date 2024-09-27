@@ -50,6 +50,9 @@ void renderLevel(SDL_Renderer *renderer, Level level, SDL_Texture *rightPlayerTe
                 } else {
                     SDL_RenderCopy(renderer, rightPlayerTexture, &srcRect, &destRect);  // Use right-facing texture
                 }
+            } else if (level.tiles[y][x] == '|') {
+                
+                // SDL_RenderCopy(renderer, groundTexture, NULL, &tileRect);
             }
         }
     }

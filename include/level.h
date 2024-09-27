@@ -1,12 +1,12 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#define WIDTH 140
+#define WIDTH 140 
 #define HEIGHT 31
 
 // Structure to represent the level
 typedef struct {
-    char tiles[HEIGHT][WIDTH];
+    char tiles[HEIGHT][WIDTH];// y is HEIGHT & x is WIDTH
 } Level;
 
 

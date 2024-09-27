@@ -27,7 +27,7 @@ int main() {
 
     // Create a window
     SDL_Window *window = SDL_CreateWindow(
-        "Level Renderer", 
+        "Ascend", 
         SDL_WINDOWPOS_CENTERED, 
         SDL_WINDOWPOS_CENTERED - 1,  // Adjust vertical centering as needed
         (int)(WIDTH_WINDOW * 32),  // Convert width to integer

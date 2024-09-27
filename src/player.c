@@ -1,8 +1,6 @@
 #include "player.h"
 #include <SDL2/SDL.h>
 
-
-
 // Function to initialize the player
 Player initPlayer(Level *level) {
     Player player;
@@ -75,7 +73,7 @@ void applyPhysics(Player *player, Level *level) {
     int tileSize = 32;  // Tile size without scaling
     int scaleFactor = 10;  // Player scale factor
     int playerSize = tileSize * scaleFactor;  // Player's size in pixels after scaling
-
+    int collisionMargin = 32;  // Adjust this value as needed
     // Calculate the player's tile position
     int tileX = player->x / tileSize;
     int tileY = player->y / tileSize;
@@ -90,24 +88,24 @@ void applyPhysics(Player *player, Level *level) {
     
     // Horizontal collisions
     if (player->velX > 0) {  // Moving right
-        int rightTileX = (player->x + playerSize) / tileSize;  // Tile to the right of the player
-
+        int rightTileX = player->x;  // Tile to the right of the player
         // Check for collision with ground tiles to the right
+       
         for (int i = 0; i <= playerTileHeight; i++) {
-            if (rightTileX < WIDTH && level->tiles[tileY + i][rightTileX] == '#') {
+            if (rightTileX <= WIDTH && (level->tiles[tileY + i][rightTileX] == '#' || level->tiles[tileY + i][rightTileX] == '|')) {
                 player->velX = 0;  // Stop horizontal movement
-                player->x = rightTileX * tileSize - playerSize;  // Snap player to the left edge of the tile
+                player->x = rightTileX ;  // Snap player to the left edge of the tile
                 break;
             }
         }
     } else if (player->velX < 0) {  // Moving left
-        int leftTileX = (player->x - 1) / tileSize;  // Tile to the left of the player
+        int leftTileX = (player->x + collisionMargin) / tileSize;  // Tile to the left of the player
 
         // Check for collision with ground tiles to the left
         for (int i = 0; i <= playerTileHeight; i++) {
-            if (leftTileX >= 0 && level->tiles[tileY + i][leftTileX] == '#') {
+            if (leftTileX >= 0 && (level->tiles[tileY + i][leftTileX] == '#' || level->tiles[tileY + i][leftTileX] == '|')) {
                 player->velX = 0;  // Stop horizontal movement
-                player->x = (leftTileX + 1) * tileSize;  // Snap player to the right edge of the tile
+                player->x = (leftTileX + 1) * tileSize - playerSize;  // Snap player to the right edge of the tile
                 break;
             }
         }
@@ -120,7 +118,7 @@ void applyPhysics(Player *player, Level *level) {
         int checkY = bottomTileY;
         // Loop until you find a `#` tile within a few tiles below the player
         while (checkY < HEIGHT && checkY < bottomTileY + scaleFactor / 2) {
-            if (level->tiles[checkY][tileX + i] == '#') {
+            if (level->tiles[checkY][tileX + i] == '#' || level->tiles[checkY][tileX + i] == '|') {
                 isGrounded = 1;  // Player is considered grounded
                 break;
             }
